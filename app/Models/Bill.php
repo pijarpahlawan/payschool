@@ -25,13 +25,14 @@ class Bill extends Model
         'name',
         'amount',
         'target',
+        'due_date',
     ];
 
     /**
      * Get the user bills for the bill.
      */
-    public function userBills()
+    public function users()
     {
-        return $this->hasMany(UserBill::class);
+        return $this->hasManyThrough(User::class, UserBill::class, 'bill_id', 'id', 'id', 'user_id');
     }
 }

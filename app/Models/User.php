@@ -22,9 +22,7 @@ class User extends Authenticatable
         'email',
         'password',
         'nis',
-        'grade_class',
-        'major_class',
-        'sub_class',
+        'class_origin',
     ];
 
     /**
@@ -48,5 +46,13 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    /**
+     * Get the bills for the user.
+     */
+    public function bills()
+    {
+        return $this->hasManyThrough(Bill::class, UserBill::class, 'user_id', 'id', 'id', 'bill_id');
     }
 }
