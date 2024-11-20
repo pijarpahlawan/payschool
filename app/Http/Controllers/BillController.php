@@ -16,19 +16,17 @@ class BillController extends Controller
         $validated = $request->validated();
         $targetType = $validated['target']['type'];
 
-        $newBill = new Bill;
-        $newBill->name = $validated['name'];
-        $newBill->amount = $validated['amount'];
-        $newBill->target = $targetType;
-        $newBill->due_date = $validated['due_date'];
+        $newBill = Bill::create([
+            'name' => $validated['name'],
+            'amount' => $validated['amount'],
+            'target' => $targetType,
+            'due_date' => $validated['due_date'],
+        ]);
 
         DB::beginTransaction();
 
         try {
-            $newBill->save();
-
             $users = [];
-            $savePromises = [];
 
             switch ($targetType) {
                 case 'ALL':
@@ -51,12 +49,12 @@ class BillController extends Controller
             }
 
             foreach ($users as $user) {
-                $userBill = new UserBill();
-                $userBill->bill_id = $newBill->id;
-                $userBill->debt = $newBill->amount;
-                $userBill->is_paid_off = false;
-                $userBill->user_id = $user->id;
-                $savePromises[] = $userBill->save();
+                UserBill::create([
+                    'bill_id' => $newBill->id,
+                    'debt' => $newBill->amount,
+                    'is_paid_off' => false,
+                    'user_id' => $user->id,
+                ]);
             }
 
             DB::commit();
