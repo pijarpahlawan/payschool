@@ -13,9 +13,7 @@ return new class extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             $table->string('nis', 255)->nullable()->after('name');
-            $table->integer('grade_class')->nullable()->after('nis');
-            $table->string('major_class')->nullable()->after('grade_class');
-            $table->integer('sub_class')->nullable()->after('major_class');
+            $table->string('class_origin', 255)->nullable()->after('nis');
         });
     }
 
@@ -25,7 +23,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn(['nis', 'grade_class', 'major_class', 'sub_class']);
+            $table->dropColumn(['nis', 'class_origin']);
         });
     }
 };
