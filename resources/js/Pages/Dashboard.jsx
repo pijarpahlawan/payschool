@@ -1,26 +1,28 @@
-import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
-import { Head } from '@inertiajs/react';
+import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
+import { Head } from "@inertiajs/react";
+import AddBilling from "@/Contents/AddBilling";
+import BillingReport from "@/Contents/BillingReport";
+import ListSiswa from "@/Contents/ListSiswa";
+import { useState } from "react";
 
 export default function Dashboard() {
+    const [activeTab, setActiveTab] = useState("billingReport");
+    const getContent = () => {
+        switch (activeTab) {
+            case "billingReport":
+                return <BillingReport />;
+            case "addBilling":
+                return <AddBilling />;
+            case "listSiswa":
+                return <ListSiswa />;
+            default:
+                return null;
+        }
+    };
     return (
-        <AuthenticatedLayout
-            header={
-                <h2 className="text-xl font-semibold leading-tight text-gray-800">
-                    Dashboard
-                </h2>
-            }
-        >
+        <AuthenticatedLayout activeTab={activeTab} setActiveTab={setActiveTab}>
             <Head title="Dashboard" />
-
-            <div className="py-12">
-                <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
-                    <div className="overflow-hidden bg-white shadow-sm sm:rounded-lg">
-                        <div className="p-6 text-gray-900">
-                            You're logged in!
-                        </div>
-                    </div>
-                </div>
-            </div>
+            {getContent()}
         </AuthenticatedLayout>
     );
 }
