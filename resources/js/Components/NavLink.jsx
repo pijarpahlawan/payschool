@@ -4,7 +4,10 @@ export default function NavLink() {
     const user = usePage().props?.auth?.user;
     return (
         <div className="bg-secondary text-white p-4 flex justify-between items-center">
-            <h1 className="text-xl font-bold">Admin Payschool</h1>
+            <h1 className="text-xl font-bold">
+                {" "}
+                <Link href={route("dashboard")}>Admin Payschool</Link>
+            </h1>
             <div className="flex gap-5 items-center">
                 <span className="text-primary font-semibold text-xl">
                     {user.name}

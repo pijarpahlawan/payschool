@@ -1,6 +1,7 @@
 <?php
 
-use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\BillController;
+use App\Http\Controllers\StudentController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -9,9 +10,12 @@ Route::get('/', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::get('/students', [StudentController::class, 'index'])->name('students.index');
+    Route::get('/admin/create', [StudentController::class, 'create'])->name('students.create');
+    Route::post('/students', [StudentController::class, 'store'])->name('students.store');
+    Route::get('/bills', [BillController::class, 'index'])->name('bill.index');
+    Route::get('/bills/create', [BillController::class, 'create'])->name('bill.create');
+    Route::post('/bills', [BillController::class, 'store'])->name('bill.store');
 });
 
 require __DIR__ . '/auth.php';

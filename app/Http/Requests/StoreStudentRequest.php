@@ -11,7 +11,7 @@ class StoreStudentRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -23,9 +23,9 @@ class StoreStudentRequest extends FormRequest
     {
         return [
             'name' => 'required|string|max:32',
-            'nis' => 'required|string|max:16',
-            'email' => 'required|string|email',
-            'class_origin' => 'required|string',
+            'nis' => 'required|string|max:16|unique:users,nis',
+            'email' => 'required|string|email|max:255|unique:users,email',
+            'class_origin' => 'required|string|max:64',
             'password' => 'required|string',
         ];
     }

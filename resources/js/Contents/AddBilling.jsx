@@ -13,7 +13,7 @@ export default function AddBilling() {
     const submit = (e) => {
         e.preventDefault();
 
-        //post(route("addBill"));
+        post(route("bill.store"));
     };
     return (
         <div className="w-full flex justify-center flex-col">

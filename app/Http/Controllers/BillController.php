@@ -78,8 +78,7 @@ class BillController extends Controller
                 ];
             });
 
-            //TODO: return view with $formatedBills
-
+            return view('bills.index', ['bills' => $formatedBills]);
         } catch (Exception $e) {
             echo $e->getMessage();
             return null;
